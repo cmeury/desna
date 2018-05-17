@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--suppress JSUnusedLocalSymbols -->
+<meta charset="utf-8">
+<body>
+<script src="https://unpkg.com/d3@5.4.0/dist/d3.js"></script>
+<script src="https://unpkg.com/viz.js@1.8.1/viz.js" type="javascript/worker"></script>
+<script src="https://unpkg.com/d3-graphviz@2.1.0/build/d3-graphviz.js"></script>
+<h1>Pods</h1>
+<div id="graph" style="text-align: center;"></div>
+<script>
+
+    const graphviz = d3.select("#graph").graphviz()
+            .attributer(attributer)
+            .logEvents(true)
+            .on("initEnd", render);
+
+    function attributer(datum, index, nodes) {
+        const margin = 20; // to avoid scrollbars
+        const selection = d3.select(this);
+        if (datum.tag === "svg") {
+            const width = window.innerWidth - margin;
+            const height = window.innerHeight - margin;
+            const unit = 'px';
+            selection.attr("width", width + unit)
+                     .attr("height", height + unit);
+            datum.attributes.width = width + unit;
+            datum.attributes.height = height + unit;
+        }
+    }
+
+    function render() {
+        let dot = {{printf "%s" .Dot}};
+        graphviz.renderDot(dot);
+    }
+
+</script>
+
+<h2>GraphViz Source File</h2>
+
+<pre>
+{{ range .DebugDot}}
+{{ . }}
+{{- end}}
+</pre>
+
+</body>

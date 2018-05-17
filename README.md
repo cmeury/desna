@@ -8,4 +8,4 @@
 ## Reference
 
 * https://golang.org/doc/articles/wiki/
-* https://godoc.org/gonum.org/v1/gonum
+* https://github.com/awalterschulze/gographviz
